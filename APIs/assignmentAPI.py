@@ -3,17 +3,18 @@ from markupsafe import escape
 
 import sys
 sys.path.append("..")
-from DB_Interfaces.assignmentInterface import AssignmentInterface
+from RequestHandlers.AssignmentHandler import AssignmentHandlerInterface
 
 
-def constructAssignmentBlueprint(interface: AssignmentInterface):
+def constructAssignmentBlueprint(interface: AssignmentHandlerInterface):
     assignmentBlueprint = Blueprint('assignment_page', __name__)
 
     @assignmentBlueprint.route('/assignment', methods=['GET'])
     def readAssignment():
-        read = interface.readAssignments(interface)
+        read = interface.handleReadAssignment(None)
         ret = ""
         for dto in read:
             ret += dto.name + " "
         return ret;
+
     return(assignmentBlueprint)

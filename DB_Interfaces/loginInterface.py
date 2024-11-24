@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod #abstract base class
-from ..Enums.RoleEnum import UserRole
+from Enums.RoleEnum import UserRole
 
 class LoginInterface(ABC):
     @abstractmethod

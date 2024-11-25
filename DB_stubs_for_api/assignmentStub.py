@@ -4,12 +4,15 @@ from DB_Interfaces.assignmentInterface import *
 
 class AssignmentImplStub(AssignmentInterface):
     def createAssignment(self, assignment: AssignmentDTO) -> str: #returns assignment ID
-        return "testID";
+        return assignment.name;
     def updateAssignment(self, assignment: AssignmentDTO):
         return
     def readAssignments(self, assignmentIDs: list[str] = None) -> list[AssignmentDTO]:
-        a = AssignmentDTO("name", "date", "desc", 10, "instructor", "", "")
-        b = AssignmentDTO("name2", "date", "desc", 10, "instructor", "", "")
-        return [a, b]
+        l = []
+        for a in assignmentIDs :
+            dto = AssignmentDTO(a, "date", "desc", 10, "instructor", ["input 1", "input2"], ["output 1", "output2"])
+            l.append(dto)
+        
+        return l
     def deleteAssignment(self, assignmentIDs: list[str]):
         return

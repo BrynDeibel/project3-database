@@ -3,7 +3,7 @@ from markupsafe import escape
 
 import sys
 sys.path.append("..")
-from RequestHandlers.LoginHandler import LoginHandlerInterface
+from RequestHandlers.loginHandler import LoginHandlerInterface
 
 
 def constructLoginBlueprint(interface: LoginHandlerInterface):

@@ -33,8 +33,11 @@ class AssignmentHandlerImpl(AssignmentHandlerInterface):
             arg = arg.split(',')
         try:
             result = self.interface.readAssignments(arg)
+            if result == None:
+                return jsonify(), 200
             #convert the results in a dictionary that can be put into a json
             assigns = []
+            
             for assignment in result:
                 newDict = {
                     'id': assignment.id,
@@ -50,7 +53,7 @@ class AssignmentHandlerImpl(AssignmentHandlerInterface):
             ret = {'assignments': assigns}
             return jsonify(ret), 200
         except Exception as e:
-            return jsonify({'error': e}), 500
+            return jsonify({'error': e.args}), 500
         
 
     def handlePOST(self, data: json):
@@ -58,15 +61,15 @@ class AssignmentHandlerImpl(AssignmentHandlerInterface):
 
         try:
             dto = AssignmentDTO(data['name'], data['dueDate'], data['description'], data['numberOfPoints'], data['instructorUsername'], data['inputs'], data['outputs'])
-        except:
-            return jsonify(), 400 #bad request
+        except Exception as e:
+            return jsonify({'error': e.args}), 400 #bad request
         
         try:
             ret = self.interface.createAssignment(dto)
             
-            return jsonify(ret), 200
+            return jsonify({'id': ret}), 200
         except Exception as e:
-            return jsonify({'error': e}), 500
+            return jsonify({'error': e.args}), 500
         
 
     def handlePUT(self, args: dict, data: json):
@@ -74,15 +77,15 @@ class AssignmentHandlerImpl(AssignmentHandlerInterface):
 
         try:
             dto = AssignmentDTO(data['name'], data['dueDate'], data['description'], data['numberOfPoints'], data['instructorUsername'], data['inputs'], data['outputs'], args['id'])
-        except:
-            return jsonify(), 400 #bad request
+        except Exception as e:
+            return jsonify({'error': e.args}), 400 #bad request
         
         try:
             self.interface.updateAssignment(dto)
             
             return jsonify(), 200
         except Exception as e:
-            return jsonify({'error': e}), 500
+            return jsonify({'error': e.args}), 500
         
     def handleDELETE(self, args: dict):
         arg = None
@@ -96,4 +99,4 @@ class AssignmentHandlerImpl(AssignmentHandlerInterface):
             result = self.interface.deleteAssignment(arg)
             return jsonify(result), 200
         except Exception as e:
-            return jsonify({'error': e}), 500
+            return jsonify({'error': e.args}), 500

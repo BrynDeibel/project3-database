@@ -47,7 +47,7 @@ Reeturns an empty body
 Returns HTTP code 500 in the event of an error, else returns 200
 '''
 
-
+import asyncio
 from flask import Blueprint, request
 
 import sys
@@ -59,18 +59,18 @@ def constructSubmissionBlueprint(interface: SubmissionHandlerInterface):
     submissionBlueprint = Blueprint('submission_page', __name__)
 
     @submissionBlueprint.route('/submissions', methods=['GET', 'POST', 'PUT', 'DELETE'])
-    def doSubmissionsThing():
+    async def doSubmissionsThing():
         if (request.method == 'GET'):
-            res = interface.handleGET(request.args.to_dict())
+            res = await interface.handleGET(request.args.to_dict())
             return res
         if (request.method == 'POST'):
-            res = interface.handlePOST(request.json)
+            res = await interface.handlePOST(request.json)
             return res
         if (request.method == 'PUT'):
-            res = interface.handlePUT(request.args.to_dict(), request.json)
+            res = await interface.handlePUT(request.args.to_dict(), request.json)
             return res
         if (request.method == 'DELETE'):
-            res = interface.handleDELETE(request.args.to_dict())
+            res = await interface.handleDELETE(request.args.to_dict())
             return res
 
     return(submissionBlueprint)

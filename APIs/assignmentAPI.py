@@ -53,6 +53,7 @@ Returns HTTP code 500 in the event of an error, else returns 200
 
 
 from flask import Blueprint, request
+import asyncio 
 
 import sys
 sys.path.append("..")
@@ -63,18 +64,18 @@ def constructAssignmentBlueprint(interface: AssignmentHandlerInterface):
     assignmentBlueprint = Blueprint('assignment_page', __name__)
 
     @assignmentBlueprint.route('/assignments', methods=['GET', 'POST', 'PUT', 'DELETE'])
-    def doAssignmentThing():
+    async def doAssignmentThing():
         if (request.method == 'GET'):
-            res = interface.handleGET(request.args.to_dict())
+            res = await (interface.handleGET(request.args.to_dict()))
             return res
         if (request.method == 'POST'):
-            res = interface.handlePOST(request.json)
+            res = await interface.handlePOST(request.json)
             return res
         if (request.method == 'PUT'):
-            res = interface.handlePUT(request.args.to_dict(), request.json)
+            res = await interface.handlePUT(request.args.to_dict(), request.json)
             return res
         if (request.method == 'DELETE'):
-            res = interface.handleDELETE(request.args.to_dict())
+            res = await interface.handleDELETE(request.args.to_dict())
             return res
 
     return(assignmentBlueprint)

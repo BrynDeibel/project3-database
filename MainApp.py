@@ -6,15 +6,17 @@ from APIs.loginAPI import constructLoginBlueprint
 from DB_stubs_for_api.assignmentStub import AssignmentImplStub
 from DB_stubs_for_api.submissionStub import SubmissionImplStub
 from DB_stubs_for_api.loginStub import loginImplStub
+from DB_Impls.assignment_fb_db_impl import *
+from DB_Impls.submission_fb_db_impl import *
 from RequestHandlers.assignmentHandler import *
 from RequestHandlers.submissionHandler import *
 from RequestHandlers.loginHandler import *
 
 #initialize whatever and make dependencies
-asnImpl = AssignmentImplStub()
+asnImpl = AssignmentInterfaceFirebase()
 asnHandler = AssignmentHandlerImpl(asnImpl)
 
-subImpl = SubmissionImplStub()
+subImpl = SubmissionInterfaceFirebase()
 subHandler = SubmissionHandlerImpl(subImpl)
 
 lgnImpl = loginImplStub()

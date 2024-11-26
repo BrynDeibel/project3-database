@@ -1,6 +1,7 @@
 from firebase import firebase
 
 firebase = firebase.FirebaseApplication('https://database-team-project3-default-rtdb.firebaseio.com', None)
+
 #Creates a new entry or overrides a previous entry in TestFolder with a given FileID
 result = firebase.put('/TestFolder', 'FileID', 
                         {'key1': 'value1',

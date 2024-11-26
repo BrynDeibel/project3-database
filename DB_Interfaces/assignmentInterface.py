@@ -4,7 +4,7 @@ class AssignmentDTO():
     def __init__(self, name: str, duedate, #what type should due date be?
                          description: str, numberOfPoints: int, instructorUsername: str,
                          inputs: list, outputs: list, id: str = None):
-        self.id = id;
+        self.id = id
         self.name = name
         self.duedate = duedate
         self.description = description

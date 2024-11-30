@@ -57,7 +57,7 @@ import asyncio
 
 import sys
 sys.path.append("..")
-from RequestHandlers.assignmentHandler import AssignmentHandlerInterface
+from RequestHandlers.AssignmentHandler import AssignmentHandlerInterface
 
 
 def constructAssignmentBlueprint(interface: AssignmentHandlerInterface):

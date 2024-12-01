@@ -12,11 +12,13 @@ def constructLoginBlueprint(interface: LoginHandlerInterface):
     @loginBlueprint.route('/login',methods=['POST'])
     def login():
         data = request.get_json()
-        if not data or 'username' not in data or 'password' not in data:
-            return 400
+        if not data:
+            return jsonify({"status":"error","message":"No data provided"})
+        if "username" not in data or "password" not in data:
+            return jsonify({"status":"error","message":"Need both username and password"})
         
         res = interface.handleLogin(data['username'],data['password'])
 
-        return jsonify(res)
+        return res
     
     return (loginBlueprint)

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod #abstract base class
-from ..Enums.RoleEnum import UserRole
+from Enums.RoleEnum import UserRole
 
 class UserDTO():
     def __init__(self, username: str, password: str, role: UserRole):

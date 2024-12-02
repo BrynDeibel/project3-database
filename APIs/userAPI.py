@@ -1,3 +1,60 @@
+'''
+API Documentation:
+
+GET /users - Gets all users or specific users
+Expects
+/users?usernames=username1&usernames=username2&usernames=username3
+(A list of usernames)
+Returns the following body:
+{
+  "users": [                              #An array of users
+    {                                           #A particular user object
+      "username:"",
+      "role":""
+    }
+    .......
+  ]
+}
+On Error Returns
+{
+    "error":""
+}
+
+
+POST /users - Creates an user
+Expects the following payload: 
+{
+    "username":"",
+    "password":"",
+    "role":""
+}
+Returns the following body:
+{
+    "status": "failure", "message":"User Successfully Created"                                  
+}
+Returns the following body on fail:
+{
+    "status": "failure", 'message':""
+}
+
+
+
+
+
+DELETE /users?usernames=username1&usernames=username2&usernames=username3......
+(a object with list of users)
+On Failure returns 
+{
+    "error": "No usernames provided"
+}
+On Success returns
+{
+    "status": "success", "message": "User(s) deleted successfully"
+}
+
+'''
+
+
 from flask import Blueprint, request, jsonify
 import sys
 sys.path.append("..")

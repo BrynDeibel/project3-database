@@ -1,3 +1,22 @@
+
+'''
+API Documentation:
+
+POST /login - Login User 
+Returns the following body on success:
+{
+    "status":"success",
+    "role":"<user_role>"
+}
+Returns the following body on failure
+{
+    "status":"failure",
+    "message":"<Fail Message>"
+}
+
+Returns HTTP error code in the event of an error, else returns 200
+'''
+
 from flask import Blueprint, request, jsonify
 from markupsafe import escape
 

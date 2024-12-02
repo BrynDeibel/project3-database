@@ -30,12 +30,12 @@ Expects the following payload:
 }
 Returns the following body:
 {
-    "status": "failure", "message":"User Successfully Created"                                  
-}
+    "status": "success", "message":"User Successfully Created"                                  
+} with 200 code
 Returns the following body on fail:
 {
     "status": "failure", 'message':""
-}
+} with bad request code
 
 
 
@@ -46,11 +46,11 @@ DELETE /users?usernames=username1&usernames=username2&usernames=username3......
 On Failure returns 
 {
     "error": "No usernames provided"
-}
+} with bad request code
 On Success returns
 {
     "status": "success", "message": "User(s) deleted successfully"
-}
+} with code 200
 
 '''
 

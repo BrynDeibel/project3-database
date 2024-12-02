@@ -3,6 +3,13 @@
 API Documentation:
 
 POST /login - Login User 
+
+Expects this body in JSON
+{
+    "username":"",
+    "password":""
+}
+
 Returns the following body on success:
 {
     "status":"success",

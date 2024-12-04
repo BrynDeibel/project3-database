@@ -21,7 +21,7 @@ class LoginHandler(LoginHandlerInterface):
             if user == "login failed":
                 return {"status":"failure","message":"Invalid Creds"}, 401 #good request, lack of auth
             if user:
-                return {"status":"success","role":user}, 200 # successful login
+                return {"status":"success", "role":user['role'], "name":user['name']}, 200 # successful login
             
             #No content just in case
             return {"status":"failure","message":"No content"},204

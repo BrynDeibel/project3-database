@@ -1,5 +1,6 @@
 #TODO: We probably want to implement some kind of request timeout. It looks like there are a few different ways of implementing it. We can talk to server team about this, they are also using flask. 
 from flask import Flask
+from flask_cors import CORS
 from APIs.assignmentAPI import constructAssignmentBlueprint
 from APIs.submissionAPI import constructSubmissionBlueprint
 from APIs.userAPI import constructUserBlueprint
@@ -31,6 +32,7 @@ lgnHandler = LoginHandler(lgnImpl)
 
 #start up the app and import all the blueprint apis, inject dependencies
 app = Flask(__name__)
+CORS(app)
 app.register_blueprint(constructAssignmentBlueprint(asnHandler))
 app.register_blueprint(constructSubmissionBlueprint(subHandler))
 app.register_blueprint(constructUserBlueprint(userHandler))

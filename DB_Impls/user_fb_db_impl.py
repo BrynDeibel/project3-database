@@ -17,7 +17,8 @@ class UserInterfaceFirebase(UserInterface):
 
             user_data = {
                 'password': hashed_password,
-                'role': userDTO.role.name
+                'role': userDTO.role.name,
+                'name': userDTO.name
             }
             firebase.put('/Users', userDTO.username, user_data)
         except Exception as e:
@@ -32,14 +33,14 @@ class UserInterfaceFirebase(UserInterface):
                 if all_users:
                     for username, data in all_users.items():
                         user_role = UserRole[data['role'].upper()]
-                        users.append(UserDTO(username, None, user_role))
+                        users.append(UserDTO(username, None, user_role, data['name']))
             else:
                 # retrieve specific users
                 for username in usernames:
                     user_data = firebase.get('/Users', username)
                     if user_data:
                         user_role = UserRole[user_data['role'].upper()]
-                        users.append(UserDTO(username, None, user_role))
+                        users.append(UserDTO(username, None, user_role, user_data['name']))
             return users
         except Exception as e:
             raise Exception(f"Error retrieving users: {str(e)}")

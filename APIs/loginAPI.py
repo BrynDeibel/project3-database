@@ -14,6 +14,7 @@ Returns the following body on success:
 {
     "status":"success",
     "role":"<user_role>"
+    "name":""
 }
 Returns the following body on failure
 {

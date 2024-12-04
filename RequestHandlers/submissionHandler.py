@@ -53,7 +53,7 @@ class SubmissionHandlerImpl(SubmissionHandlerInterface):
             subs = []
             for submission in result:
                 newDict = {
-                    "assignmentID": submission.assignmentID,
+                    "assignmentId": submission.assignmentID,
                     "score": submission.score,
                     "submissionId": submission.id,
                     "studentUsername": submission.studentUsername,

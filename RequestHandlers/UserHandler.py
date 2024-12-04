@@ -7,7 +7,7 @@ from Enums.RoleEnum import UserRole
 
 class UserHandlerInterface(ABC):
     @abstractmethod
-    def handleGET(self, usernames: list[str]):
+    def handleGET(self, args: dict):
         pass
 
     @abstractmethod
@@ -15,7 +15,7 @@ class UserHandlerInterface(ABC):
         pass
 
     @abstractmethod
-    def handleDELETE(self, usernames: list[str]):
+    def handleDELETE(self, args: dict):
         pass
 
 
@@ -23,17 +23,24 @@ class UserHandler(UserHandlerInterface):
     def __init__(self, interface: UserInterface):
         self.interface = interface
 
-    def handleGET(self, usernames: list[str]):
+    def handleGET(self, args: dict):
         try:
-            users = self.interface.getUsers(usernames)
-            result = [{'username': user.username, 'role': user.role.name} for user in users]
+            arg = None
+            #Read in the usernames
+            if (args.get('usernames') != None):
+                arg = args.get('usernames')
+                arg = arg.replace('[', '')
+                arg = arg.replace(']', '')
+                arg = arg.split(',')
+            users = self.interface.getUsers(arg)
+            result = [{'username': user.username, 'role': user.role.name, 'name': user.name} for user in users]
             return {'users': result}
         except Exception as e:
             return {'error': str(e)}
 
     def handlePOST(self, data: dict):
         try:
-            userDTO = UserDTO(data['username'], data['password'], UserRole[data['role'].upper()])
+            userDTO = UserDTO(data['username'], data['password'], UserRole[data['role'].upper()], data['name'])
             self.interface.createUser(userDTO)
             return {'status': 'success', 'message': 'User created successfully'}
         except KeyError:
@@ -41,9 +48,16 @@ class UserHandler(UserHandlerInterface):
         except Exception as e:
             return {'status': 'failure', 'message': str(e)}
 
-    def handleDELETE(self, usernames: list[str]):
+    def handleDELETE(self, args: dict):
         try:
-            self.interface.deleteUser(usernames)
+            arg = None
+            #Read in the usernames
+            if (args.get('usernames') != None):
+                arg = args.get('usernames')
+                arg = arg.replace('[', '')
+                arg = arg.replace(']', '')
+                arg = arg.split(',')
+            self.interface.deleteUser(arg)
             return {'status': 'success', 'message': 'User(s) deleted successfully'}
         except Exception as e:
             return {'status': 'failure', 'message': str(e)}

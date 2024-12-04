@@ -67,8 +67,7 @@ def constructUserBlueprint(interface: UserHandlerInterface):
     @userBlueprint.route('/users', methods=['GET', 'POST', 'DELETE'])
     def handleUsers():
         if request.method == 'GET':
-            usernames = request.args.getlist('usernames')
-            res = interface.handleGET(usernames)
+            res = interface.handleGET(request.args.to_dict())
             return jsonify(res)
         
         if request.method == 'POST':
@@ -80,11 +79,7 @@ def constructUserBlueprint(interface: UserHandlerInterface):
             return jsonify(res)
         
         if request.method == 'DELETE':
-            usernames = request.args.getlist('usernames')
-            if not usernames:
-                return jsonify({'error': 'No usernames provided'}), 400
-            
-            res = interface.handleDELETE(usernames)
+            res = interface.handleDELETE(request.args.to_dict())
             return jsonify(res)
     
     return userBlueprint

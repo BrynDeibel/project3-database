@@ -20,7 +20,7 @@ class LoginInterfaceFirebase(LoginInterface):
                 return "login failed"
 
             if user_data['password'] == hashed_password:
-                return user_data['role']  # return the role as success response
+                return {'role':user_data['role'], 'name':user_data['name']}  # return the role as success response
 
             return "login failed"
         except Exception as e:

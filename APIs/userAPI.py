@@ -64,7 +64,7 @@ from RequestHandlers.UserHandler import UserHandlerInterface
 def constructUserBlueprint(interface: UserHandlerInterface):
     userBlueprint = Blueprint('user_page', __name__)
 
-    @userBlueprint.route('/users', methods=['GET', 'POST', 'DELETE'])
+    @userBlueprint.route('/users', methods=['GET', 'POST', 'PATCH', 'DELETE'])
     def handleUsers():
         if request.method == 'GET':
             res = interface.handleGET(request.args.to_dict())
@@ -76,6 +76,13 @@ def constructUserBlueprint(interface: UserHandlerInterface):
                 return jsonify({'error': 'Invalid request payload'}), 400
             
             res = interface.handlePOST(data)
+            return jsonify(res)
+        
+        if request.method == 'PATCH':
+            data = request.get_json()
+            if not data or 'name' not in data or 'role' not in data:
+                return jsonify({'error': 'Invalid request payload'}), 400
+            res = interface.handlePATCH(request.args.to_dict(), data)
             return jsonify(res)
         
         if request.method == 'DELETE':

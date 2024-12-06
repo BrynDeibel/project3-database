@@ -24,6 +24,20 @@ class UserInterfaceFirebase(UserInterface):
         except Exception as e:
             raise Exception(f"Error creating user: {str(e)}")
 
+    def updateUser(self, userDTO: UserDTO):
+        try:
+            user_data = {
+                'name': userDTO.name,
+                'role': userDTO.role.name
+            }
+            get = firebase.get('/Users', userDTO.username)
+            if (get):
+                firebase.patch(('/Users/' + userDTO.username), user_data)
+            else:
+                raise Exception(f"User does not exist")
+        except Exception as e:
+            raise Exception(f"Error patching user: {str(e)}")
+    
     def getUsers(self, usernames: list[str] = None) -> list[UserDTO]:
         try:
             users = []

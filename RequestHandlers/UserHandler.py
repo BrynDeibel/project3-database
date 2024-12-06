@@ -15,6 +15,10 @@ class UserHandlerInterface(ABC):
         pass
 
     @abstractmethod
+    def handlePATCH(self, args: dict, data: dict):
+        pass
+
+    @abstractmethod
     def handleDELETE(self, args: dict):
         pass
 
@@ -48,6 +52,16 @@ class UserHandler(UserHandlerInterface):
         except Exception as e:
             return {'status': 'failure', 'message': str(e)}
 
+    def handlePATCH(self, args: dict, data: dict):
+        try:
+            userDTO = UserDTO(args['username'], None, UserRole[data['role'].upper()], data['name'])
+            self.interface.updateUser(userDTO)
+            return {'status': 'success', 'message': 'User patched successfully'}
+        except KeyError:
+            return {'status': 'failure', 'message': 'Invalid role provided'}
+        except Exception as e:
+            return {'status': 'failure', 'message': str(e)}
+        
     def handleDELETE(self, args: dict):
         try:
             arg = None

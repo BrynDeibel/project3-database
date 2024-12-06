@@ -10,7 +10,10 @@ class UserDTO():
 
 class UserInterface(ABC):
     @abstractmethod
-    def createUser(userDTO):
+    def createUser(self, userDTO: UserDTO):
+        pass
+    @abstractmethod
+    def updateUser(self, userDTO: UserDTO):
         pass
     @abstractmethod
     def getUsers(self, usernames: list[str] = None) -> list[UserDTO]:
